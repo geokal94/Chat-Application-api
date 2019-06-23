@@ -13,7 +13,7 @@ export class MessagesGateway
   @WebSocketServer() server;
   num_of_onlineUsers: number = 0;
   connectedUsers: string[] = [];
-  is_name_unique: boolean = false; 
+  is_name_unique: boolean = false;
 
   async handleConnection() {
     // Notify connected clients of current users
