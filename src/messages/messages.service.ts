@@ -1,47 +1,43 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Messages } from './interfaces/messages.inteface';
 import { CreateMessageDTO } from './dto/create-message.dto';
-import { MESSAGES } from '../mocks/messages.mock';
+/* import { MESSAGES } from '../mocks/messages.mock'; */
 
 @Injectable()
 export class MessagesService {
-  messages = MESSAGES;
-
-  getMessages(): Promise<any> {
-    return new Promise(resolve => {
-      resolve(this.messages);
-    });
+  constructor(
+    @InjectModel('Messages') private readonly messagesModel: Model<Messages>,
+  ) {}
+  // fetch all messages
+  async getAllMessages(): Promise<Messages[]> {
+    const messages = await this.messagesModel.find().exec();
+    return messages;
   }
 
-  getMessage(messageID): Promise<any> {
-    let id = Number(messageID);
-    return new Promise(resolve => {
-      const message = this.messages.find(message => message.id === id);
-      if (!message) {
-        throw new HttpException('Message does not exist!', 404);
-      }
-      resolve(message);
-    });
+  // post a message
+  async addMessage(createMessageDTO: CreateMessageDTO): Promise<Messages> {
+    const newMessage = await this.messagesModel(createMessageDTO);
+    return newMessage.save();
   }
-
-  addMessage(message): Promise<any> {
-    return new Promise(resolve => {
-      this.messages.push(message);
-      resolve(this.messages);
-    });
+  // Edit message
+  async updateMessage(
+    messageID,
+    createMessageDTO: CreateMessageDTO,
+  ): Promise<Messages> {
+    const updatedMessage = await this.messagesModel.findByIdAndUpdate(
+      messageID,
+      createMessageDTO,
+      { new: true },
+    );
+    return updatedMessage;
   }
-
-  deleteMessage(messageID): Promise<any> {
-    let id = Number(messageID);
-    return new Promise(resolve => {
-      let index = this.messages.findIndex(message => message.id === id);
-      if (index === -1) {
-        throw new HttpException('Message does not exist!', 404);
-      }
-      this.messages.splice(1, index);
-      resolve(this.messages);
-    });
+  // Delete message
+  async deleteMessage(messageID): Promise<any> {
+    const deletedMessage = await this.messagesModel.findByIdAndRemove(
+      messageID,
+    );
+    return deletedMessage;
   }
 }
