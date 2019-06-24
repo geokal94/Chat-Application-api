@@ -16,12 +16,12 @@ export class MessagesService {
     return messages;
   }
 
-  // post a message
+  // post message
   async addMessage(createMessageDTO: CreateMessageDTO): Promise<Messages> {
     const newMessage = await this.messagesModel(createMessageDTO);
     return newMessage.save();
   }
-  // Edit message
+  // Edit a message
   async updateMessage(
     messageID,
     createMessageDTO: CreateMessageDTO,

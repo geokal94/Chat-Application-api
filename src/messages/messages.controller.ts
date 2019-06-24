@@ -51,7 +51,7 @@ export class MessagesController {
       feedback: 'Message has been successfully edited',
       message,
     });
-  } 
+  }
 
   // Delete message
   @Delete('/delete')
@@ -62,5 +62,5 @@ export class MessagesController {
       feedback: 'Message has been deleted',
       message,
     });
-  } 
+  }
 }
