@@ -7,9 +7,12 @@ import { MessagesModule } from './messages/messages.module';
 @Module({
   imports: [
     MessagesModule,
-    MongooseModule.forRoot('mongodb://localhost/nest', {
-      useNewUrlParser: true,
-    }),
+    MongooseModule.forRoot(
+      'mongodb+srv://geokal94:chrispaul3dr1@mycluster-xgalj.mongodb.net/test?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+      },
+    ),
   ],
   controllers: [AppController],
   providers: [AppService],

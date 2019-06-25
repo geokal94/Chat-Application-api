@@ -5,7 +5,6 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
 } from '@nestjs/websockets';
-import { Users } from '../users/interfaces/users.interface';
 
 @WebSocketGateway()
 export class MessagesGateway
