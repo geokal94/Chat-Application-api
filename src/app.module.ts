@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MessagesModule } from './messages/messages.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { MessagesModule } from './messages/messages.module';
         useNewUrlParser: true,
       },
     ),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
