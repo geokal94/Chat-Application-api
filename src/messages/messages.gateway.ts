@@ -10,10 +10,17 @@ import {
 export class MessagesGateway
   implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server;
+  num_of_onlineUsers: number = 0;
 
-  async handleConnection() {}
+  async handleConnection() {
+    // Notify connected clients of current users
+    this.server.emit('NUM_OF_USERS', this.num_of_onlineUsers);
+  }
 
-  async handleDisconnect() {}
+  async handleDisconnect() {
+    // Notify connected clients of current users
+    this.server.emit('NUM_OF_USERS', this.num_of_onlineUsers);
+  }
 
   @SubscribeMessage('SEND_MESSAGE')
   async onChat(client, message) {
